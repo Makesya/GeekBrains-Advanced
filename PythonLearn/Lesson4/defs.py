@@ -8,7 +8,7 @@ def printArgs(a, b, c, *args):
     print(f"a = {a}, b = {b}, c = {c}, other = {args}")
 
 
-def quadrantic_equations(a: int | float, b: int | float, c: int | float) -> list:
+def quadrant_eqalitons(a: int | float, b: int | float, c: int | float) -> list:
     """
     Solves a quadratic equation of the form ax^2 + bx + c = 0.
 
