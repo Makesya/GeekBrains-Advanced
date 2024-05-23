@@ -143,7 +143,7 @@ def factorial(n):
 
 """
 Генератор отличается от функции тем, что он сохраняет свое состояние между вызовами.
-Используется ключевое слово yield, генераторы могут быть созданы с помощью функции.
+Используется ключевое слово `yield`, генераторы могут быть созданы с помощью функции.
 Так же занимают меньше памяти, чем списки.
 """
 
@@ -163,7 +163,26 @@ for i, num in enumerate(giter, start=1):
     print(f"{i}! = {num:_}")
 
 
-def testGigaCode(value: str):
-    if len(value) > 100:
-        print(value)
-        return value.upper()
+def weight_of_steel(length: int, width: int, height: int) -> int:
+    """
+    Calculate the weight of steel based on its length, width, and height.
+
+    :param length: The length of the steel in meters.
+    :param width: The width of the steel in meters.
+    :param height: The height of the steel in meters.
+    :return: The weight of the steel in kilograms.
+    """
+
+    # The density of steel is approximately 7,850 kg/m^3
+    density = 7850
+
+    # Calculate the volume of the steel in cubic meters
+    volume = length * width * height
+
+    # Calculate the weight of the steel in tons
+    weight = (volume * density) / 1000
+
+    return weight
+
+
+print(f"{weight_of_steel(3, 1, 0.5)} tons")
