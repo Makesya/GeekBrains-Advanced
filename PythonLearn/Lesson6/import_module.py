@@ -1,5 +1,8 @@
+import Package.date_verify
+import Package.ggame
 import xmodule
 import random
+import Package
 
 
 def calc(a: int | float, b: int | float):
@@ -17,4 +20,6 @@ def calc(a: int | float, b: int | float):
     return a+b
 
 
-print(xmodule.calculate_steel_weight(3, 1, 0.2))
+# print(xmodule.calculate_steel_weight(3, 1, 0.2))
+
+Package.date_verify.is_valid_date("28.02.12")
