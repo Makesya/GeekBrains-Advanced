@@ -31,6 +31,37 @@ test = ["pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-xdist", "p
 test-randomorder = ["pytest-randomly"]
 
 [[package]]
+name = "customtkinter"
+version = "5.2.2"
+description = "Create modern looking GUIs with Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+darkdetect = "*"
+packaging = "*"
+
+[[package]]
+name = "darkdetect"
+version = "0.8.0"
+description = "Detect OS Dark Mode from Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+macos-listener = ["pyobjc-framework-cocoa"]
+
+[[package]]
+name = "packaging"
+version = "24.1"
+description = "Core utilities for Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "pyaescrypt"
 version = "6.1.1"
 description = "Encrypt and decrypt files and streams in AES Crypt format (version 2)"
@@ -52,10 +83,13 @@ python-versions = ">=3.8"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "f527de15b249014337a242b042188c7427c8403bc16e197bf80d0f4bf53e0a64"
+content-hash = "4354e2bf65814e6b69de0e0c732e0f55eb7683edac11f24d23b51edfceeadbe6"
 
 [metadata.files]
 cffi = []
 cryptography = []
+customtkinter = []
+darkdetect = []
+packaging = []
 pyaescrypt = []
 pycparser = []

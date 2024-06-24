@@ -7,6 +7,7 @@ authors = ["makesya <trademakesya@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 pyAesCrypt = "^6.1.1"
+customtkinter = "^5.2.2"
 
 [tool.poetry.dev-dependencies]
 
