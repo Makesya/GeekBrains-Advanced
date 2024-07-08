@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %} 
+{% block content %} 
+ 
+{% if users %}
+{% for user in users %}
+	<div class="bg-light p-3 mb-3 rounded shadow">
+		<h1>{{ user.username }}</h1>
+		<p>{{ user.email }}</p>
+		<p>{{ user.created_at }}</p>
+	</div>
+{% endfor %}
+{% else %}
+	<h1 class="alert alert-warning">Список пуст</h1>
+{% endif %}
+{% endblock %}
