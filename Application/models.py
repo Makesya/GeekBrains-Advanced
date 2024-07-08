@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from PIL import Image
 
 db = SQLAlchemy()
 
@@ -8,8 +9,10 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    permissions = db.Column(db.String(80), nullable=False, default="user")
+    role = db.Column(db.String(80), nullable=False, default="user")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    avatar = db.Column(db.String(256), nullable=True,
+                       default=f'static/images/default_avatar.jpg')
 
     def __repr__(self):
         return f"{self.username} - {self.email}"

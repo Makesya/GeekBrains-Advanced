@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5 text-center">
+	<div class="row">
+		<div class="col-md-4 offset-md-4">
+			<div class="bg-dark text-white mt-5 d-flex">
+				<div class="card-body">
+					<h5 class="card-title">Авторизация</h5>
+					<form method="POST" id="login-form">
+						{% for item in form %}
+						{{ item }}
+						{% endfor %}
+						
+						{% with messages = get_flashed_messages(with_categories=true, category_filter=["error"]) %}
+						{% if messages %}
+						<div class="alert alert-danger" role="alert">
+							{% for category, message in messages %}
+							{% if category == 'error' %}
+							{{ message }}
+							{% endif %}
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% endwith %}
+
+					</form>
+                    <a href="{{ url_for('register') }}" class="link text-primary">Нет аккаунта? Зарегистрироваться</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
