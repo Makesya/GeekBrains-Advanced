@@ -3,22 +3,17 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			rel="stylesheet"
-			href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
-		/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
 		<title>{% block title %} {% endblock %}</title>
 	</head>
 	<body class="bg-dark">
-		<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 		<script src="https://kit.fontawesome.com/cc9165eed4.js" crossorigin="anonymous"></script>
-		{% block navbar %} {% include "navbar.html" %} {% endblock %}
 		<div class="mt-5 bg-dark">
 			<div class="container">
-				{% block content %}
+				 
+                <h1 class="bg-warning rounded text-center">НЕТУ НАХУЙ</h1>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">На гланую</a>
 
-				{% endblock %} {% block footer %} {% include "footer.html" %} {% endblock
-				%}
 			</div>
 		</div>
 	</body>

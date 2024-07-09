@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
-from PIL import Image
+from enum import Enum
+from secrets import token_hex
 
 db = SQLAlchemy()
+
+status = Enum("status", ["unactive", "active", "banned", "deleted"])
 
 
 class User(db.Model):
@@ -11,6 +14,8 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     role = db.Column(db.String(80), nullable=False, default="user")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    status = db.Column(db.Enum(status), nullable=False, default="unactive")
+    token = db.Column(db.String(256), nullable=True, default=token_hex(16))
     avatar = db.Column(db.String(256), nullable=True,
                        default=f'static/images/default_avatar.jpg')
 

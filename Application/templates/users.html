@@ -4,30 +4,61 @@
 
 {% block content %}
 <div class="container mt-5 mb-5 text-center">
-    <div class="row">
-        {% for user in users %}
-        <div class="col-md-3">
-            <div class="card mb-3 mt-3" style="width: 18rem">
-                <div class="card-body">
-                    <a class="card" href="{{ url_for('user', id=user.id) }}">
-                        {{ user.avatar }}
-                        <img class="shadow" src="{{url}}{{ user.avatar }}" class="card-img-top" alt="..." />
-                    </a>
-                    <h5 class="card-title">{{ user.username }}</h5>
-                    <p class="card-text">Почта: {{ user.email }}</p>
-                    <p class="card-text">Создан: {{ user.created_at }}</p>
-                    <p class="card-text d-flex justify-content-around">Роль: {{ user.role }}     ID: {{ user.id }}</p>
-                    {% if role == 'admin' %}
-                    <div class="panel d-flex justify-content-around flex-column">
-                        <a class="btn btn-danger mb-1" href="{{ url_for('delete', id=user.id) }}">Удалить</a>
-                        <!-- UPLOAD -->
-                         <!-- ENDBLOCK -->
+    {% if users %}
+    <table class="table table-hover table-light table-striped">
+        <thead>
+            <tr>
+                <th>Логин <a href="{{ url_for('users', sort='username', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
+                <th>Почта <a href="{{ url_for('users', sort='email', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
+                <th>Создан <a href="{{ url_for('users', sort='created_at', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
+                <th>Статус <a href="{{ url_for('users', sort='status', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
+                <th>ID <a href="{{ url_for('users', sort='id', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
+                {% if role == 'admin' %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="{% if user.role == 'admin' %}bg-warning{% endif %}">
+                 {% if user.role != 'user' %}
+                 <td class="text-start"><a href="{{ url_for('user', username=user.username) }}">{{ user.username }} <span class="badge text-danger"> {{ user.role }}</span> </a></td>
+                 {% else %}
+                <td class="text-start"><a href="{{ url_for('user', username=user.username) }}">{{ user.username }}</a></td>
+                {% endif %}
+                <td title="{{ user.email }}">{% if user.email|length > 30 %}{{ user.email| truncate(25) }}{% else %}{{ user.email }}{% endif %}</td>
+                <td>{{ user.created_at }}</td>
+
+                {% if user.status.name == 'unactive' %}
+                <td><span class="text-warning">Не активирован</span>
+                {% if role != 'user' %}
+                <a class="text-primary ms-2" href="{{ url_for('activate', token=user.token) }}"><i class="fa-solid fa-check"></i></a>
+                {% endif %}
+                </td>
+                {% elif user.status.name == 'active' %}
+                <td><span class="text-success">Активирован</span></td>
+                {% else %}
+                <td><span class="text-danger">Заблокирован</span></td>
+                {% endif %}
+                <td>{{ user.id }}</td>
+                {% if role == 'admin' %}
+                <td>
+                    <a class="btn btn-danger" href="{{ url_for('delete', token=user.token) }}" title="Удалить"><i class="fa-solid fa-trash"></i></a>
+                    {% if user.status.name != 'banned' %}
+                    <a class="btn btn-danger" href="{{ url_for('ban', token=user.token) }}" title="Заблокировать"><i class="fa-solid fa-ban"></i></a>
+                    {% else %}
+                    <a class="btn btn-primary" href="{{ url_for('unban', token=user.token) }}" title="Разблокировать"><i class="fa-solid fa-arrow-rotate-left"></i></a>
                     {% endif %}
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h1 class="alert alert-warning">Пользователи отсутствуют</h1>
+    {% endif %}
 </div>
 
 {% endblock %}
+
