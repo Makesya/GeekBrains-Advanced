@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
-from secrets import token_hex
+from uuid import uuid4
 
 db = SQLAlchemy()
 
@@ -15,9 +15,12 @@ class User(db.Model):
     role = db.Column(db.String(80), nullable=False, default="user")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     status = db.Column(db.Enum(status), nullable=False, default="unactive")
-    token = db.Column(db.String(256), nullable=True, default=token_hex(16))
+    level = db.Column(db.String(80), nullable=False, default="Рядовой")
+    token = db.Column(db.String(32), nullable=True,
+                      default=lambda: uuid4().hex)
+    # ... existing code ...
     avatar = db.Column(db.String(256), nullable=True,
-                       default=f'static/images/default_avatar.jpg')
+                       default=f'/static/images/default_avatar.jpg')
 
     def __repr__(self):
         return f"{self.username} - {self.email}"
@@ -28,4 +31,25 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "created_at": self.created_at,
+        }
+
+
+class SocialNetworks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    website = db.Column(db.String(80), default="None")
+    github = db.Column(db.String(80), default="None")
+    instagram = db.Column(db.String(80), default="None")
+    vk = db.Column(db.String(80), default="None")
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __repr__(self):
+        return f"{self.website} - {self.github}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "website": self.website,
+            "github": self.github,
+            "instagram": self.instagram,
+            "vk": self.vk
         }

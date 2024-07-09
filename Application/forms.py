@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FileField
 from wtforms.validators import DataRequired, EqualTo, Email, Length
 
 
@@ -20,5 +20,6 @@ class LoginForm(FlaskForm):
     username = StringField('Name', validators=[DataRequired()], render_kw={
                            'class': 'form-control mb-3', 'placeholder': 'Логин'})
     password = StringField('Password', validators=[DataRequired()], render_kw={
-                           'class': 'form-control mb-3', 'placeholder': 'Пароль'})
-    submit = SubmitField('Войти', render_kw={'class': 'btn btn-primary mb-3'})
+                           'class': 'form-control mb-3', 'placeholder': 'Пароль', 'type': 'password'})
+    submit = SubmitField('Войти', render_kw={
+                         'class': 'btn btn-primary mb-3'})

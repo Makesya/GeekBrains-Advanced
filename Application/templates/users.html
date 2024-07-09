@@ -8,6 +8,7 @@
     <table class="table table-hover table-light table-striped">
         <thead>
             <tr>
+                <th>Аватарка</th>
                 <th>Логин <a href="{{ url_for('users', sort='username', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
                 <th>Почта <a href="{{ url_for('users', sort='email', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
                 <th>Создан <a href="{{ url_for('users', sort='created_at', sort_dir='asc') }}"><i class="fa-solid fa-arrows-up-down"></i></a></th>
@@ -21,8 +22,17 @@
         <tbody>
             {% for user in users %}
             <tr class="{% if user.role == 'admin' %}bg-warning{% endif %}">
+                <td>
+                    <a href="{{ url_for('user', username=user.username) }}">{{user.token}}<img class="avatar50" src="{{ user.avatar }}"></a>
+                    
+                </td>
                  {% if user.role != 'user' %}
-                 <td class="text-start"><a href="{{ url_for('user', username=user.username) }}">{{ user.username }} <span class="badge text-danger"> {{ user.role }}</span> </a></td>
+                 
+                 <td class="text-start"><a href="{{ url_for('user', username=user.username) }}">{{ user.username }} 
+                    {% if user.role != 'user' %}
+                            <span class="badge text-{% if user.role == 'admin' %}danger{% elif user.role == 'moder' %}primary{% else %}muted{% endif %}"> {{ user.role }}</span>	
+                          {% endif %}
+                 </a></td>
                  {% else %}
                 <td class="text-start"><a href="{{ url_for('user', username=user.username) }}">{{ user.username }}</a></td>
                 {% endif %}
@@ -32,11 +42,16 @@
                 {% if user.status.name == 'unactive' %}
                 <td><span class="text-warning">Не активирован</span>
                 {% if role != 'user' %}
-                <a class="text-primary ms-2" href="{{ url_for('activate', token=user.token) }}"><i class="fa-solid fa-check"></i></a>
+                <a class="text-primary ms-2" href="{{ url_for('activate', token=user.token) }}" title="Активировать"><i class="fa-solid fa-check"></i></a>
                 {% endif %}
                 </td>
                 {% elif user.status.name == 'active' %}
-                <td><span class="text-success">Активирован</span></td>
+                <td><span class="text-success">Активирован</span>
+               <!--  -->
+               {% if role != 'user' %}
+                 <a href="{{ url_for('deactivate', token=user.token )}}" class="text-primary"><i class="fa-solid fa-xmark"></i></a>
+               {% endif %}
+                </td>
                 {% else %}
                 <td><span class="text-danger">Заблокирован</span></td>
                 {% endif %}
